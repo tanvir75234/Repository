@@ -20,10 +20,10 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('username',30)->unique();
-            $table->integer('role',30)->default(5);
+            $table->integer('role')->default(5);
             $table->string('photo',50)->nullable();
             $table->string('slug',30)->nullable();
-            $table->integer('status',30)->default(1);
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

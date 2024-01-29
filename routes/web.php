@@ -8,10 +8,10 @@ use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\IncomeCategoryController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\ExpenseCategoryController;
-
 use App\Http\Controllers\ReportController;
-
+use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\RecycleController;
+use App\Http\Controllers\ManageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,13 +33,22 @@ Route::get('dashboard', [AdminController::class, 'index']);
 
 Route::get('dashboard/user', [UserController::class, 'index']);
 Route::get('dashboard/user/add', [UserController::class, 'add']);
-Route::get('dashboard/user/edit', [UserController::class, 'edit']);
-Route::get('dashboard/user/view', [UserController::class, 'view']);
+Route::get('dashboard/user/edit/{slug}', [UserController::class, 'edit']);
+Route::get('dashboard/user/view/{slug}', [UserController::class, 'view']);
 Route::post('dashboard/user/submit', [UserController::class, 'insert']);
 Route::post('dashboard/user/update', [UserController::class, 'update']);
 Route::post('dashboard/user/softdelete', [UserController::class, 'softdelete']);
 Route::post('dashboard/user/restore', [UserController::class, 'restore']);
 Route::post('dashboard/user/delete', [UserController::class, 'delete']);
+
+Route::get('dashboard/manage', [ManageController::class, 'index']);
+Route::get('dashboard/manage/basic', [ManageController::class, 'basic']);
+Route::post('dashboard/manage/basic/update', [ManageController::class, 'basic_update']);
+Route::get('dashboard/manage/social', [ManageController::class, 'social']);
+Route::post('dashboard/manage/social/update', [ManageController::class, 'social_update']);
+Route::get('dashboard/manage/contact', [ManageController::class, 'contact']);
+Route::post('dashboard/manage/contact/update', [ManageController::class, 'contact_update']);
+
 
 Route::get('dashboard/income', [IncomeController::class, 'index']);
 Route::get('dashboard/income/add', [IncomeController::class, 'add']);
@@ -50,6 +59,8 @@ Route::post('dashboard/income/update', [IncomeController::class, 'update']);
 Route::post('dashboard/income/softdelete', [IncomeController::class, 'softdelete']);
 Route::post('dashboard/income/restore', [IncomeController::class, 'restore']);
 Route::post('dashboard/income/delete', [IncomeController::class, 'delete']);
+Route::get('dashboard/income/pdf', [IncomeController::class, 'pdf']);
+Route::get('dashboard/income/excel', [IncomeController::class, 'excel']);
 
 Route::get('dashboard/income/category', [IncomeCategoryController::class, 'index']);
 Route::get('dashboard/income/category/add', [IncomeCategoryController::class, 'add']);
@@ -82,6 +93,11 @@ Route::post('dashboard/expense/restore', [ExpenseController::class, 'restore']);
 Route::post('dashboard/expense/delete', [ExpenseController::class, 'delete']);
 
 Route::get('dashboard/report', [ReportController::class, 'index']);
+Route::get('dashboard/report/summary', [ReportController::class, 'summary']);
+Route::get('dashboard/report/current/month', [ReportController::class, 'current_month']);
+
+Route::get('dashboard/archive', [ArchiveController::class, 'index']);
+Route::get('dashboard/archive/month', [ArchiveController::class, 'month']);
 
 Route::get('dashboard/recycle', [RecycleController::class, 'index']);
 Route::get('dashboard/recycle/user', [RecycleController::class, 'user']);

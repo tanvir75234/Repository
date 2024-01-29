@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
-// use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\User;
 use Carbon\Carbon;
 use Session;
-use Image;
+
 use Auth;
 
 class UserController extends Controller{
@@ -29,12 +28,14 @@ class UserController extends Controller{
         return view('admin.user.add');
     }
 
-    public function edit(){
-        return view('admin.user.edit');
+    public function edit($slug){
+        $data=User::where('status',1)->where('slug',$slug)->firstOrFail()
+;        return view('admin.user.edit',compact('data'));
     }
 
-    public function view(){
-        return view('admin.user.view');
+    public function view($slug){
+        $data=User::where('status',1)->where('slug',$slug)->firstOrFail()
+;        return view('admin.user.view',compact('data'));
     }
 
     public function insert(Request $request){
@@ -69,8 +70,11 @@ class UserController extends Controller{
 
         if($request->hasfile('pic')){
             $image = $request->file('pic');
-            $imageName = 'user_'.$insert.'_'.time().'.'.$image->getClientOriginalName(); 
-            Image::make($image)->save(base_path('public/uploads/users/'.$imageName));
+            $imageName = 'user_'.time().'.'.$image->getClientOriginalExtension(); 
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($image);
+            $image = $image->resize(300,300);
+            $image->save('uploads/user/'.$imageName);
 
             User::where('id',$insert)->update([
                 'photo' => $imageName,
@@ -88,19 +92,95 @@ class UserController extends Controller{
         }
     }
 
-    public function update(){
+    public function update(Request $request){
+        $id=$request['id'];
+        $this->validate($request,[
+            'name'=>'required|max:50',
+            'email'=>'required|email|max:50|unique:users,email,'.$id.'id',
+            'role'=>'required',
+        ],[
+            'name.required'=>'Please enter your name',
+            'email.required'=>'Please enter your email',
+            'role.required'=>'Please select your role', 
+        ]);
 
+        $slug=$request['slug'];
+
+        $update=User::where('status',1)->where('id',$id)->update([
+            'name'=>$request['name'],
+            'phone'=>$request['phone'],
+            'email'=>$request['email'],
+            'role'=>$request['role'],
+            'updated_at' =>Carbon::now('asia/dhaka')->toDateTimeString(),
+  
+        ]);
+
+        if($request->hasfile('pic')){
+            $image = $request->file('pic');
+            $imageName = 'user_'.time().'.'.$image->getClientOriginalExtension(); 
+            $manager = new ImageManager(new Driver());
+            $image = $manager->read($image);
+            $image = $image->resize(300,300);
+            $image->save('uploads/user/'.$imageName);
+
+            User::where('id',$id)->update([
+                'photo' => $imageName,
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ]);
+        }
+
+
+        if($update){
+            Session::flash('success','Successfully updated user registration');
+            return redirect('dashboard/user/view/'.$slug);
+        }else{
+            Session::flash('error','Opps operation failed');
+            return redirect('dashboard/user/add/'.$slug);
+        }
     }
 
     public function softdelete(){
+        $id=$_POST['modal_id'];
+        $soft=User::where('status',1)->where('id',$id)->update([
+            'status'=>0,
+            'updated_at'=>Carbon::now('asia/dhaka')->toDateTimeString(),
+        ]);
 
+        if($soft){
+            Session::flash('success',':Successfully delete user information.');
+            return redirect('dashboard/user');
+        }else{
+            Session::flash('error','Opps! Operation failed.');
+            return redirect('dashboard/user');
+        };
     }
 
     public function restore(){
+        $id=$_POST['modal_id'];
+        $soft=User::where('status',0)->where('expense_id',$id)->update([
+            'status'=>1,
+            'updated_at'=>Carbon::now('asia/dhaka')->toDateTimeString(),
+        ]);
 
+        if($soft){
+            Session::flash('success',':Successfully restore user information.');
+            return redirect('dashboard/user');
+        }else{
+            Session::flash('error','Opps! Operation failed.');
+            return redirect('dashboard/recyle/user');
+        };
     }
 
     public function delete(){
+        $id=$_POST['modal_id'];
+        $delete=User::where('status',0)->where('id',$id)->delete([]);
 
+        if($delete){
+            Session::flash('success',':Successfully permanently delete your expense category information.');
+            return redirect('dashboard/recycle/user');
+        }else{
+            Session::flash('error','Opps! Operation failed.');
+            return redirect('dashboard/recycle/user');
+        };
     }
 }

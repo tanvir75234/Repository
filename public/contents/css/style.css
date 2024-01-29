@@ -127,13 +127,48 @@ body{
 	transition: all linear 0.5s; 
 }
 
+.menu ul li ul{
+    display: none;
+    transition: all linear.3s;
+}
+
+.menu ul li:hover ul{
+    display: block;
+    background-color: #252c34;
+}
+
 .menu ul li:hover a{
     background-color: #4D6299;
+}
+
+.menu ul li ul li a{
+    background-color: #252c34!important;
+}
+
+.menu ul li:hover ul li{
+    display: block;
+    background-color: #252c34!important;
 }
 
 .menu ul li a i{
     margin-right: 5px;   
 }
+
+.menu ul li ul li a{
+     color: #ccc;
+     font-size: 14px;
+     font-weight: 500;
+     text-decoration: none;
+     line-height: 35px;
+     display: block;
+     border-bottom: 1px solid #17181F;
+     padding-left: 35px;
+     transition: all linear 0.5s; 
+ }
+
+ .menu ul li ul li:hover a{
+    color: green;
+ }
 
 .content{
     
@@ -294,5 +329,11 @@ span.req_star{
 .modal_title{
     font-size: 17px;
     font-weight: 700;
+}
+
+@media print {
+    .no_print{
+        display: none!important;
+    }
 }
 

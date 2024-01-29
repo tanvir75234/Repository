@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Exports\IncomeExport;
 use App\Models\Income;
 use Carbon\Carbon;
 use Session;
 use Auth;
+use Excel;
+use PDF;
 
 class IncomeController extends Controller{
     public function __construct(){
@@ -118,5 +121,15 @@ class IncomeController extends Controller{
 
     public function delete(){
 
+    }
+
+    public function pdf(){
+        $all=Income::where('income_status',1)->orderBy('income_id','DESC')->get();
+        $pdf = PDF::loadview('admin.income.main.pdf',compact('all'));
+        return $pdf->download('income.pdf');
+    }
+
+    public function excel(){
+        return Excel::download(new IncomeExport, 'income.xlsx');
     }
 }

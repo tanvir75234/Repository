@@ -45,4 +45,13 @@ $(document).ready( function () {
         "info":true,
         "autowidth": false,
     })
+
+    $('#alltableDesc').DataTable({
+        "paging": true,
+        "lengthchange": true,
+        "searching": true,
+        "order": [[0,"desc"]],
+        "info": true,
+        "autoWidth": false,
+    });
 } );
