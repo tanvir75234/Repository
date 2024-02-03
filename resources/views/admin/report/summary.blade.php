@@ -36,50 +36,75 @@
                   </div>
                   @endif
                     </div>
-                    <div class="col-md-2"></div>
-                  </div>           
-              <table id="alltableDesc" class="table table-bordered table-striped table-hover custom_table">
-                <thead class="table-dark">
-                  <tr>
-                    <th>Date</th>
-                    <th>Title</th>
-                    <th>Category</th>
-                    <th>Income</th>
-                    <th>Expense</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  @foreach($allIncome as $income)
-                  <tr>
-                    <td>{{date('d-M-Y',strtotime($income->income_date))}}</td>
-                    <td>{{$income->income_title}}</td>
-                    <td>{{$income->categoryInfo->incate_name}}</td>
-                    <td>{{number_format($income->income_amount,2)}}</td>  
-                    <td></td>
-                  </tr>
-                  @endforeach()
-                  @foreach($allIncome as $income)
-                  <tr>
-                    <td>{{date('d-M-Y',strtotime($income->income_date))}}</td>
-                    <td>{{$income->income_title}}</td>
-                    <td>{{$income->categoryInfo->incate_name}}</td>
-                    <td></td>
-                    <td>{{number_format($income->income_amount,2)}}</td>  
-                  </tr>
-                  @endforeach()
-                </tbody>
-                <tfoot>
-                  <tr>
-                    <th colspan="3" class="text-end">Total:</th>
-                    <th>{{number_format($total_Income,2)}}</th>
-                    <th>{{number_format($total_Expense,2)}}</th>
-                  </tr>
-                  <tr>
-                    <th colspan="3" class="text-end text-success">Savings:</th>
-                    <th colspan="2">{{number_format($total_savings,2)}}</th>
-                  </tr>
-                </tfoot>
-              </table>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                          </div>   
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8">
+                              <form action="{{url('dashboard/report/search')}}" method="get">
+                                @csrf
+                                <div class="row">
+                                  <div class="col-md-5">
+                                    <input type="text" class="form-control" id="startDate" placeholder="Form">
+                                  </div>
+                                  <div class="col-md-5 px-1">
+                                    <input type="text" class="form-control" id="startDate" placeholder="To">
+                                  </div>
+                                  <div class="col-md-2 px-1">
+                                    <input type="submit" class="btn btn-sm btn-primary mt-1", id="" placeholder="Submit">
+                                  </div>
+                                </div>
+                              </form>
+                            </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                  </div>        
+                      <div class="row">
+                        <div class="col-md-12">
+                        <table id="summary" class="table table-bordered table-striped table-hover custom_table">
+                        <thead class="table-dark">
+                          <tr>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Income</th>
+                            <th>Expense</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach($allIncome as $income)
+                          <tr>
+                            <td>{{date('d-M-Y',strtotime($income->income_date))}}</td>
+                            <td>{{$income->income_title}}</td>
+                            <td>{{$income->categoryInfo?->incate_name}}</td>
+                            <td>{{number_format($income->income_amount,2)}}</td>  
+                            <td></td>
+                          </tr>
+                          @endforeach()
+                          @foreach($allIncome as $income)
+                          <tr>
+                            <td>{{date('d-M-Y',strtotime($income->income_date))}}</td>
+                            <td>{{$income->income_title}}</td>
+                            <td>{{$income->categoryInfo?->incate_name}}</td>
+                            <td></td>
+                            <td>{{number_format($income->income_amount,2)}}</td>  
+                          </tr>
+                          @endforeach()
+                        </tbody>
+                        <tfoot>
+                          <tr>
+                            <th colspan="3" class="text-end">Total:</th>
+                            <th>{{number_format($total_Income,2)}}</th>
+                            <th>{{number_format($total_Expense,2)}}</th>
+                          </tr>
+                          <tr>
+                            <th colspan="3" class="text-end text-success">Savings:</th>
+                            <th colspan="2">{{number_format($total_savings,2)}}</th>
+                          </tr>
+                        </tfoot>
+                      </table>
+                        </div>
+              </div>
             </div>
             <div class="card-footer">
               <div class="btn-group" role="group" aria-label="Button group">

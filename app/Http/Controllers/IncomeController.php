@@ -112,15 +112,48 @@ class IncomeController extends Controller{
     }
 
     public function softdelete(){
+        $id=$_POST['modal_id'];
+        $soft=Income::where('income_status',1)->where('income_id',$id)->update([
+            'income_status'=>0,
+            'updated_at'=>Carbon::now('asia/dhaka')->toDateTimeString(),
+        ]);
 
+        if($soft){
+            Session::flash('success',':Successfully delete income category information.');
+            return redirect('dashboard/income');
+        }else{
+            Session::flash('error','Opps! Operation failed.');
+            return redirect('dashboard/income');
+        };
     }
 
     public function restore(){
+        $id=$_POST['modal_id'];
+        $soft=Income::where('income_status',0)->where('income_id',$id)->update([
+            'income_status'=>1,
+            'updated_at'=>Carbon::now('asia/dhaka')->toDateTimeString(),
+        ]);
 
+        if($soft){
+            Session::flash('success',':Successfully restore income category information.');
+            return redirect('dashboard/income');
+        }else{
+            Session::flash('error','Opps! Operation failed.');
+            return redirect('dashboard/income/recyle');
+        };
     }
 
     public function delete(){
+        $id=$_POST['modal_id'];
+        $delete=Income::where('income_status',0)->where('income_id',$id)->delete([]);
 
+        if($delete){
+            Session::flash('success',':Successfully permanently delete your income category information.');
+            return redirect('dashboard/recycle/income');
+        }else{
+            Session::flash('error','Opps! Operation failed.');
+            return redirect('dashboard/recycle/income');
+        };
     }
 
     public function pdf(){

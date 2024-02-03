@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{asset('contents')}}/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{asset('contents')}}/css/all.min.css">
     <link rel="stylesheet" href="{{asset('contents')}}/css/datatables.min.css">
+    <link rel="stylesheet" href="{{asset('contents')}}/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="{{asset('contents')}}/css/style.css">
   </head>
   <body>
@@ -73,7 +74,7 @@
                             </li>   
                             <li><a href="{{url('dashboard/archive')}}"><i class="fas fa-box"></i> Archive</a></li>
                             <li><a href="{{url('dashboard/report/summary ')}}"><i class="fas fa-file"></i> Reports</a></li>
-                            <li><a href="#"><i class="fas fa-trash"></i> Recyle Bin</a></li>
+                            <li><a href="{{url('dashboard/recycle')}}"><i class="fas fa-trash"></i> Recyle Bin</a></li>
                             <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();"><i class="fas fa-sign-out-alt"></i> Logout</a></li>        
                         </ul>
                         <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -111,6 +112,7 @@
     <script src="{{asset('contents')}}/js/jquery-3.6.0.min.js"></script>
     <script src="{{asset('contents')}}/js/bootstrap.bundle.min.js"></script>
     <script src="{{asset('contents')}}/js/datatables.min.js"></script>
+    <script src="{{asset('contents')}}/js/bootstrap-datepicker.min.js"></script>
     <script src="{{asset('contents')}}/js/custom.js"></script>
   </body>
 </html>

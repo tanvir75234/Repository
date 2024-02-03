@@ -331,6 +331,7 @@ span.req_star{
     font-weight: 700;
 }
 
+
 @media print {
     .no_print{
         display: none!important;

@@ -94,6 +94,7 @@ Route::post('dashboard/expense/delete', [ExpenseController::class, 'delete']);
 
 Route::get('dashboard/report', [ReportController::class, 'index']);
 Route::get('dashboard/report/summary', [ReportController::class, 'summary']);
+Route::get('dashboard/report/search', [ReportController::class, 'search']);
 Route::get('dashboard/report/current/month', [ReportController::class, 'current_month']);
 
 Route::get('dashboard/archive', [ArchiveController::class, 'index']);
@@ -105,5 +106,6 @@ Route::get('dashboard/recycle/income', [RecycleController::class, 'income']);
 Route::get('dashboard/recycle/income/category', [RecycleController::class, 'income_category']);
 
 Route::get('dashboard/recycle/expense', [RecycleController::class, 'expense']);
+Route::get('dashboard/recycle/expense/category', [RecycleController::class, 'expense']);
 
 require __DIR__.'/auth.php';

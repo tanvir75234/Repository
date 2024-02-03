@@ -45,7 +45,7 @@
                   <tr>
                     <td>{{date('d-M-Y',strtotime($data->income_date))}}</td>
                     <td>{{$data->income_title}}</td>
-                    <td>{{$data->categoryInfo->incate_name}}</td>
+                    <td>{{$data->categoryInfo?->incate_name}}</td>
                     <td>{{number_format($data->income_amount,2)}}</td>
                     <td>
                         <div class="btn-group btn_group_manage" role="group">

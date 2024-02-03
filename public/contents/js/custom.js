@@ -46,12 +46,34 @@ $(document).ready( function () {
         "autowidth": false,
     })
 
-    $('#alltableDesc').DataTable({
-        "paging": true,
-        "lengthchange": true,
-        "searching": true,
+    $('#summary').DataTable({
+        "paging": false,
+        "lengthchange": false,
+        "searching": false,
         "order": [[0,"desc"]],
         "info": true,
         "autoWidth": false,
     });
+
+
 } );
+
+$(function(){
+    $('#date').datepicker({
+        autoclose:true,
+        format:'yyy-mm-dd',
+        todayHighlight:true,
+    })
+
+    $('#startDate').datepicker({
+        autoclose:true,
+        format:'yyy-mm-dd',
+        todayHighlight:true,
+    })
+
+    $('#lasttDate').datepicker({
+        autoclose:true,
+        format:'yyy-mm-dd',
+        todayHighlight:true ,
+    })
+});
