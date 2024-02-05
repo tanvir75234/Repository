@@ -113,6 +113,8 @@
     <script src="{{asset('contents')}}/js/bootstrap.bundle.min.js"></script>
     <script src="{{asset('contents')}}/js/datatables.min.js"></script>
     <script src="{{asset('contents')}}/js/bootstrap-datepicker.min.js"></script>
+    <script src="{{ $chart->cdn() }}"></script>
     <script src="{{asset('contents')}}/js/custom.js"></script>
+    {{ $chart->script() }}
   </body>
 </html>
